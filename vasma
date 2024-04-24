@@ -214,13 +214,13 @@ initVar() {
 
     localIP=
 
-    # 定时任务执行任务名称 RenewTLS-更新证书 UpdateGeo-更新geo文件
+    # Scheduled task execution task name RenewTLS-update certificate UpdateGeo-update geo file
     cronName=$1
 
-    # tls安装失败后尝试的次数
+    # Number of attempts after tls installation failed
     installTLSCount=
 
-    # BTPanel状态
+    # BTPanel Status
     #	BTPanelStatus=
     # 宝塔域名
     btDomain=
