@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 检测区
 # -------------------------------------------------------------
-# 检查系统
+# Check System
 export LANG=en_US.UTF-8
 
 echoContent() {
@@ -11,32 +11,32 @@ echoContent() {
         # shellcheck disable=SC2154
         ${echoType} "\033[31m${printN}$2 \033[0m"
         ;;
-        # 天蓝色
+        # sky blue
     "skyBlue")
         ${echoType} "\033[1;36m${printN}$2 \033[0m"
         ;;
-        # 绿色
+        # green
     "green")
         ${echoType} "\033[32m${printN}$2 \033[0m"
         ;;
-        # 白色
+        # white
     "white")
         ${echoType} "\033[37m${printN}$2 \033[0m"
         ;;
     "magenta")
         ${echoType} "\033[31m${printN}$2 \033[0m"
         ;;
-        # 黄色
+        # yellow
     "yellow")
         ${echoType} "\033[33m${printN}$2 \033[0m"
         ;;
     esac
 }
-# 检查SELinux状态
+# Check SELinux status
 checkCentosSELinux() {
     if [[ -f "/etc/selinux/config" ]] && ! grep -q "SELINUX=disabled" <"/etc/selinux/config"; then
-        echoContent yellow "# 注意事项"
-        echoContent yellow "检测到SELinux已开启，请手动关闭，教程如下"
+        echoContent yellow "# Precautions"
+        echoContent yellow "It is detected that SELinux is turned on. Please turn it off manually. The tutorial is as follows."
         echoContent yellow "https://www.v2ray-agent.com/archives/1679931532764#heading-8 "
         exit 0
     fi
@@ -77,14 +77,14 @@ checkSystem() {
     fi
 
     if [[ -z ${release} ]]; then
-        echoContent red "\n本脚本不支持此系统，请将下方日志反馈给开发者\n"
+        echoContent red "\nThis script does not support this system, please feedback the log below to the developer\n"
         echoContent yellow "$(cat /etc/issue)"
         echoContent yellow "$(cat /proc/version)"
         exit 0
     fi
 }
 
-# 检查CPU提供商
+# Check CPU provider
 checkCPUVendor() {
     if [[ -n $(which uname) ]]; then
         if [[ "$(uname)" == "Linux" ]]; then
@@ -105,99 +105,99 @@ checkCPUVendor() {
                 warpRegCoreCPUVendor="main-linux-arm64"
                 ;;
             *)
-                echo "  不支持此CPU架构--->"
+                echo "  This CPU architecture is not supported--->"
                 exit 1
                 ;;
             esac
         fi
     else
-        echoContent red "  无法识别此CPU架构，默认amd64、x86_64--->"
+        echoContent red "  This CPU architecture cannot be recognized, default amd64、x86_64--->"
         xrayCoreCPUVendor="Xray-linux-64"
         v2rayCoreCPUVendor="v2ray-linux-64"
     fi
 }
 
-# 初始化全局变量
+# Initialize global variables
 initVar() {
     installType='yum -y install'
     removeType='yum -y remove'
     upgrade="yum -y update"
     echoType='echo -e'
 
-    # 核心支持的cpu版本
+    # Core supported cpu version
     xrayCoreCPUVendor=""
     v2rayCoreCPUVendor=""
     hysteriaCoreCPUVendor=""
     warpRegCoreCPUVendor=""
     cpuVendor=""
 
-    # 域名
+    # Domain Name
     domain=
 
-    # CDN节点的address
+    # CDN node address
     add=
 
-    # 安装总进度
+    # Total installation progress
     totalProgress=1
 
-    # 1.xray-core安装
-    # 2.v2ray-core 安装
-    # 3.v2ray-core[xtls] 安装
+    # 1.xray-core Install
+    # 2.v2ray-core Install
+    # 3.v2ray-core[xtls] Install
     coreInstallType=
 
-    # 核心安装path
+    # Core installation path
     # coreInstallPath=
 
     # v2ctl Path
     ctlPath=
-    # 1.全部安装
-    # 2.个性化安装
+    # 1.Install all
+    # 2.Personalized installation
     # v2rayAgentInstallType=
 
-    # 当前的个性化安装方式 01234
+    # Current personalized installation method 01234
     currentInstallProtocolType=
 
-    # 当前alpn的顺序
+    # The order of the current alpn
     currentAlpn=
 
-    # 前置类型
+    # Prefix type
     frontingType=
 
-    # 选择的个性化安装方式
+    # Selected personalized installation method
     selectCustomInstallType=
 
-    # v2ray-core、xray-core配置文件的路径
+    # Path to v2ray-core, xray-core configuration files
     configPath=
 
-    # xray-core reality状态
+    # xray-core reality status
     realityStatus=
 
-    # hysteria 配置文件的路径
+    # path to hysteria configuration file
     hysteriaConfigPath=
     #    interfaceName=
-    # 端口跳跃
+    # port hopping
     portHoppingStart=
     portHoppingEnd=
     portHopping=
 
-    # tuic配置文件路径
+    # tuic configuration file path
     tuicConfigPath=
     tuicAlgorithm=
     tuicPort=
 
-    # 配置文件的path
+    # The path to the configuration file
     currentPath=
 
-    # 配置文件的host
+    # Configuration file host
     currentHost=
 
-    # 安装时选择的core类型
+    # The core type selected during installation
     selectCoreType=
 
-    # 默认core版本
+    # Default core version
     v2rayCoreVersion=
 
-    # 随机路径
+    # random path
     customPath=
 
     # centos version
