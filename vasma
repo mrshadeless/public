@@ -6,7 +6,7 @@ export LANG=en_US.UTF-8
 
 echoContent() {
     case $1 in
-    # 红色
+    # red
     "red")
         # shellcheck disable=SC2154
         ${echoType} "\033[31m${printN}$2 \033[0m"
